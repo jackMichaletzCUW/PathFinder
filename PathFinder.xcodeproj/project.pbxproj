@@ -7,12 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0469304A241EA899001E4541 /* Simulation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04693049241EA899001E4541 /* Simulation.swift */; };
 		04F52538241D53EF00D0F0E0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F52537241D53EF00D0F0E0 /* AppDelegate.swift */; };
 		04F5253A241D53EF00D0F0E0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F52539241D53EF00D0F0E0 /* ViewController.swift */; };
 		04F5253C241D53EF00D0F0E0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04F5253B241D53EF00D0F0E0 /* Assets.xcassets */; };
 		04F5253F241D53EF00D0F0E0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04F5253D241D53EF00D0F0E0 /* Main.storyboard */; };
 		04F5254B241D53F000D0F0E0 /* PathFinderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F5254A241D53F000D0F0E0 /* PathFinderTests.swift */; };
 		04F52556241D53F000D0F0E0 /* PathFinderUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F52555241D53F000D0F0E0 /* PathFinderUITests.swift */; };
+		04F52564241D547E00D0F0E0 /* SimView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F52563241D547E00D0F0E0 /* SimView.swift */; };
+		04F52566241D5BCB00D0F0E0 /* Tile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F52565241D5BCB00D0F0E0 /* Tile.swift */; };
+		04F52568241D605200D0F0E0 /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F52567241D605200D0F0E0 /* Map.swift */; };
+		04F5256C241D62B300D0F0E0 /* Core.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F5256B241D62B300D0F0E0 /* Core.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -33,6 +38,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		04693049241EA899001E4541 /* Simulation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Simulation.swift; sourceTree = "<group>"; };
 		04F52534241D53EF00D0F0E0 /* PathFinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PathFinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04F52537241D53EF00D0F0E0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		04F52539241D53EF00D0F0E0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -46,6 +52,10 @@
 		04F52551241D53F000D0F0E0 /* PathFinderUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PathFinderUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		04F52555241D53F000D0F0E0 /* PathFinderUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathFinderUITests.swift; sourceTree = "<group>"; };
 		04F52557241D53F000D0F0E0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		04F52563241D547E00D0F0E0 /* SimView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimView.swift; sourceTree = "<group>"; };
+		04F52565241D5BCB00D0F0E0 /* Tile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tile.swift; sourceTree = "<group>"; };
+		04F52567241D605200D0F0E0 /* Map.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Map.swift; sourceTree = "<group>"; };
+		04F5256B241D62B300D0F0E0 /* Core.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Core.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +112,11 @@
 				04F5253D241D53EF00D0F0E0 /* Main.storyboard */,
 				04F52540241D53EF00D0F0E0 /* Info.plist */,
 				04F52541241D53EF00D0F0E0 /* PathFinder.entitlements */,
+				04F52563241D547E00D0F0E0 /* SimView.swift */,
+				04693049241EA899001E4541 /* Simulation.swift */,
+				04F5256B241D62B300D0F0E0 /* Core.swift */,
+				04F52565241D5BCB00D0F0E0 /* Tile.swift */,
+				04F52567241D605200D0F0E0 /* Map.swift */,
 			);
 			path = PathFinder;
 			sourceTree = "<group>";
@@ -254,8 +269,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0469304A241EA899001E4541 /* Simulation.swift in Sources */,
+				04F5256C241D62B300D0F0E0 /* Core.swift in Sources */,
+				04F52568241D605200D0F0E0 /* Map.swift in Sources */,
 				04F5253A241D53EF00D0F0E0 /* ViewController.swift in Sources */,
+				04F52564241D547E00D0F0E0 /* SimView.swift in Sources */,
 				04F52538241D53EF00D0F0E0 /* AppDelegate.swift in Sources */,
+				04F52566241D5BCB00D0F0E0 /* Tile.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
