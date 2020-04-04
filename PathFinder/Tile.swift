@@ -12,9 +12,9 @@ class Tile: NSObject {
 
     public var parent:Tile?
     
-    public var gval:Int = -1
-    public var hval:Int = -1
-    public var fval:Int = -1
+    public var gval:Double = -1
+    public var hval:Double = -1
+    public var fval:Double = -1
     
     public enum TileType {
         case open, closed, unvisited, obstacle, point, path
@@ -32,13 +32,17 @@ class Tile: NSObject {
     }
     
     // allowing diagonal movement.
-    public func g() -> Int {
+    public func g() -> Double {
         if gval == -1 {
             if parent != nil {
-                gval = parent!.g() + 1 //abs(parent!.ix - ix) + abs(parent!.iy - iy)
+                if !((abs(parent!.ix - ix) == 1) && (abs(parent!.iy - iy) == 1)) {
+                    gval = parent!.g() + 1 //abs(parent!.ix - ix) + abs(parent!.iy - iy)
+                } else {
+                    gval = parent!.g() + sqrt(2.0)
+                }
             }
             else {
-                gval = 0
+                gval = 999999
             }
         }
         
@@ -46,16 +50,16 @@ class Tile: NSObject {
     }
     
     // manhattan distance
-    public func h() -> Int {
+    public func h() -> Double {
         if hval == -1 {
-            //hval = Int(sqrt(pow(Float(ix - Core.terminus[0]), 2.0) + pow(Float(iy - Core.terminus[1]), 2.0)))
-            hval = abs(ix - Core.terminus[0]) + abs(iy - Core.terminus[1])
+            hval = sqrt(pow(Double(ix - Core.terminus[0]), 2.0) + pow(Double(iy - Core.terminus[1]), 2.0))
+            //hval = abs(Double(ix - Core.terminus[0])) + abs(Double(iy - Core.terminus[1]))
         }
         
         return hval
     }
     
-    public func f() -> Int {
+    public func f() -> Double {
         if fval == -1 {
             fval = g() + h()
         }

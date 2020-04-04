@@ -26,7 +26,7 @@ class ViewController: NSViewController {
     }
 
     @IBAction func nextStepClicked(_ sender: NSButton) {
-        Timer.scheduledTimer(withTimeInterval: 0.01, repeats: true, block: { timer in
+        Timer.scheduledTimer(withTimeInterval: 0.002, repeats: true, block: { timer in
             if Simulation.nextStep() {
                 self.simulation.repaint()
             }

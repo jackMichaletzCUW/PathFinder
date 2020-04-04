@@ -11,13 +11,12 @@ import CoreGraphics
 
 class SimView: NSView {
     
-    
     let openColor = CGColor(red: CGFloat(0xAC as Float / 0xFF), green: CGFloat(0xB3 as Float / 0xFF), blue: CGFloat(0x69 as Float / 0xFF), alpha: 1.0)
     let closedColor = CGColor(red: CGFloat(0x8C as Float / 0xFF), green: CGFloat(0x93 as Float / 0xFF), blue: CGFloat(0x49 as Float / 0xFF), alpha: 1.0)
     let unvisitedColor = CGColor(red: CGFloat(0xF7 as Float / 0xFF), green: CGFloat(0xFE as Float / 0xFF), blue: CGFloat(0xAE as Float / 0xFF), alpha: 1.0)
-    let obstacleColor = CGColor(red: CGFloat(0xB3 as Float / 0xFF), green: CGFloat(0x76 as Float / 0xFF), blue: CGFloat(0x72 as Float / 0xFF), alpha: 1.0)
+    let obstacleColor = CGColor(red: CGFloat(0x63 as Float / 0xFF), green: CGFloat(0x3D as Float / 0xFF), blue: CGFloat(0x3A as Float / 0xFF), alpha: 1.0)
     let pointColor = CGColor(red: 0.0, green:0.0, blue: 0.0, alpha: 1.0)
-    let pathColor = CGColor(red: 0.3, green:0.3, blue: 0.3, alpha: 1.0)
+    let pathColor = CGColor(red: 0.0, green:0.0, blue: 1.0, alpha: 1.0)
     
     public func repaint() -> Void {
         setNeedsDisplay(NSRect(x: 0,y: 0,width: 600,height: 600))
@@ -96,11 +95,20 @@ class SimView: NSView {
                         context?.fill(CGRect(x: x * 10, y: y * 10, width: 10, height: 10))
                         break
                     case Tile.TileType.open:
-                        context?.setFillColor(openColor)
+                        //context?.setFillColor(openColor)
+                        var value:Double = (Core.largestf - Core.map.grid[x][y].f()) / (Core.largestf - Core.smallestf)
+                        value = (value > 1.0 ? 1.0 : value)
+                                                
+                        context?.setFillColor(CGColor(red: CGFloat(0.5 + (value / 2)), green: CGFloat(0.5 + (value / 2)), blue: CGFloat(value), alpha: 1.0))
+                        
                         context?.fill(CGRect(x: x * 10, y: y * 10, width: 10, height: 10))
                         break
                     case Tile.TileType.closed:
-                        context?.setFillColor(closedColor)
+                        //context?.setFillColor(closedColor)
+                        var red:Double = Core.map.grid[x][y].h() / Core.ih
+                        red = (red > 1.0 ? 1.0 : red)
+                        
+                        context?.setFillColor(CGColor(red: CGFloat(red), green: CGFloat(1.0 - red), blue: CGFloat(0x49 as Float / 0xFF), alpha: 1.0))
                         context?.fill(CGRect(x: x * 10, y: y * 10, width: 10, height: 10))
                         break
                     case Tile.TileType.unvisited:

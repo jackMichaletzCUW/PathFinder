@@ -25,6 +25,10 @@ class Core: NSObject {
     
     static var simulation:SimView? = nil
     
+    static var ih:Double = -1.0
+    static var smallestf:Double = 9999.0
+    static var largestf:Double = 9999.0
+    
     static func repaint() -> Void {
         simulation?.repaint()
     }

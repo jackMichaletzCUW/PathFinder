@@ -16,6 +16,9 @@ class Simulation: NSObject {
     
     static func initSim() -> Void {
         open.append(Core.map.grid[Core.origin[0]][Core.origin[1]])
+        open[0].gval = 0
+        open[0].fval = open[0].h()
+        Core.ih = open[0].h()
         initialized = true
     }
     
@@ -28,9 +31,9 @@ class Simulation: NSObject {
             if possibleCoord[0] >= 0 && possibleCoord[0] < Core.TILEWIDTH && possibleCoord[1] >= 0 && possibleCoord[1] < Core.TILEHEIGHT && Core.map.getTile(xpos: possibleCoord[0], ypos: possibleCoord[1]).getType() != Tile.TileType.obstacle {
                 let s:Tile = Core.map.getTile(xpos: possibleCoord[0], ypos: possibleCoord[1])
                 
-                var n:Tile = Tile(type: s.getType(), ix: s.ix, iy: s.iy)
-                n.parent = t
-                rv.append(n)
+                //var n:Tile = Tile(type: s.getType(), ix: s.ix, iy: s.iy)
+                //n.parent = t
+                rv.append(s)
             }
         }
         
@@ -57,26 +60,6 @@ class Simulation: NSObject {
         }
     }
     
-    static func tileInOpenList(t:Tile) -> Bool {
-        for tile in open {
-            if ttCompare(t1: t, t2: tile) {
-                return true
-            }
-        }
-        
-        return false
-    }
-    
-    static func tileInClosedList(t:Tile) -> Bool {
-        for tile in closed {
-            if ttCompare(t1: t, t2: tile) {
-                return true
-            }
-        }
-        
-        return false
-    }
-    
     static func nextStep() -> Bool {
         if !initialized {
             initSim()
@@ -86,16 +69,35 @@ class Simulation: NSObject {
             return false
         }
         
-        var smallF:Int = open[0].f()
-        var sfidx = 0
-        for idx in 1..<open.count {
-            if open[idx].f() < smallF {
-                smallF = open[idx].f()
-                sfidx = idx
+        var smallestF:Double = open[0].f()
+        
+        // for the graphics
+        var largestF:Double = open[0].f()
+        
+        var smallestIndex = 0
+        for index in 1..<open.count {
+            if open[index].f() < smallestF {
+                smallestF = open[index].f()
+                smallestIndex = index
+            }
+            
+            if open[index].f() > largestF {
+                largestF = open[index].f()
             }
         }
         
-        let q = open.remove(at: sfidx)
+        if smallestF != 0.0 {
+            Core.smallestf = smallestF
+        }
+        
+        Core.largestf = largestF
+                
+        let q = open.remove(at: smallestIndex)
+        
+        closed.append(q)
+        if Core.map.grid[q.ix][q.iy].getType() != Tile.TileType.point {
+            Core.map.grid[q.ix][q.iy].setType(type: Tile.TileType.closed)
+        }
         
         if tcCompare(t: q, c: Core.terminus) {
             // end point
@@ -106,39 +108,31 @@ class Simulation: NSObject {
         let successors = getSuccessors(t: q)
         
         for successor in successors {
-            //print("ix: " + String(successor.ix) + ", iy: " + String(successor.iy))
+            var tentg:Double = -1.0
             
-            if tileInClosedList(t: successor) {
-                continue
+            if !((abs(q.ix - successor.ix) == 1) && (abs(q.iy - successor.iy) == 1)) {
+                // not diagonal
+                tentg = q.g() + 1
+            } else {
+                // is diagonal; need to use pythagorean theorem
+                tentg = q.g() + sqrt(2.0)
             }
             
-            let tentg = q.g() + 1
-        
-            if tentg < successor.g() || !tileInOpenList(t: successor) {
+            if tentg < successor.g() {
+                successor.parent = q
                 successor.gval = tentg
                 successor.fval = tentg + successor.h()
                 
-                if !tileInOpenList(t: successor) {
+                if !closed.contains(successor) {
                     open.append(successor)
+                                        
                     if Core.map.grid[successor.ix][successor.iy].getType() != Tile.TileType.point {
                         Core.map.grid[successor.ix][successor.iy].setType(type: Tile.TileType.open)
                     }
                 }
             }
-            /*else if tileInOpenList(t: successor) || tileInClosedList(t: successor) {
-                continue
-            }
-            else {
-                Core.map.grid[successor.ix][successor.iy].setType(type: Tile.TileType.open)
-                open.append(successor)
-            }*/
         }
-        
-        closed.append(q)
-        if Core.map.grid[q.ix][q.iy].getType() != Tile.TileType.point {
-            Core.map.grid[q.ix][q.iy].setType(type: Tile.TileType.closed)
-        }
-        
+      
         return true
     }
 }
